@@ -32,6 +32,7 @@ export class SmokePingChart extends Chart {
         // run as privileged since linuxserver doesnt support rootless mode
         privileged: true,
         readOnlyRootFilesystem: false,
+        allowPrivilegeEscalation: true,
       },
       volumeMounts: [
         {
