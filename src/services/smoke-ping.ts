@@ -27,6 +27,7 @@ export class SmokePingChart extends Chart {
         PUID: EnvValue.fromValue('1000'),
         PGID: EnvValue.fromValue('1000'),
         TZ: EnvValue.fromValue('America/Denver'),
+        S6_READ_ONLY_ROOT: EnvValue.fromValue('1')
       },
       securityContext: {
         ensureNonRoot: false,
