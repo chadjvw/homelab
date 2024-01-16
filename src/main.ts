@@ -1,20 +1,8 @@
-import * as kplus from 'cdk8s-plus-27'
-import { Construct } from 'constructs'
-import { App, Chart } from 'cdk8s'
-
-class MyChart extends Chart {
-  constructor(scope: Construct, appLabel: string) {
-    super(scope, appLabel)
-
-    new kplus.Deployment(this, 'app-container', {
-      replicas: 1,
-      containers: [{ image: 'nginx' }],
-    })
-  }
-}
+import { App } from 'cdk8s'
+import { SmokePingChart } from './services/smoke-ping'
 
 const app = new App()
 
-new MyChart(app, 'homelab')
+new SmokePingChart(app, 'smoke-ping')
 
 app.synth()
