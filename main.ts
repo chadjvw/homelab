@@ -1,9 +1,9 @@
 import { Construct } from 'constructs';
-import { App, Chart, ChartProps } from 'cdk8s';
+import { App, Chart } from 'cdk8s';
 import { KubeDeployment } from './imports/k8s';
 
 class MyChart extends Chart {
-  constructor(scope: Construct, appLabel: string, props: ChartProps = {}) {
+  constructor(scope: Construct, appLabel: string) {
     super(scope, appLabel);
 
     // Define a Kubernetes Deployment
