@@ -33,6 +33,7 @@ export class SmokePingChart extends Chart {
         privileged: true,
         readOnlyRootFilesystem: false,
         allowPrivilegeEscalation: true,
+        ensureNonRoot: false,
       },
       volumeMounts: [
         {
