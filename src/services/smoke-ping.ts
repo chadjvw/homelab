@@ -47,6 +47,8 @@ export class SmokePingChart extends Chart {
       ],
     })
 
-    deployment.exposeViaIngress('/smoke-ping')
+    deployment.exposeViaIngress('/smoke-ping', {
+      name: 'smoke-ping',
+    })
   }
 }
