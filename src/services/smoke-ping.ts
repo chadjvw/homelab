@@ -27,10 +27,11 @@ export class SmokePingChart extends Chart {
         PUID: EnvValue.fromValue('1000'),
         PGID: EnvValue.fromValue('1000'),
         TZ: EnvValue.fromValue('America/Denver'),
-        S6_READ_ONLY_ROOT: EnvValue.fromValue('1'),
       },
       securityContext: {
-        ensureNonRoot: false,
+        // run as privileged since linuxserver doesnt support rootless mode
+        privileged: true,
+        readOnlyRootFilesystem: false,
       },
       volumeMounts: [
         {
@@ -40,10 +41,6 @@ export class SmokePingChart extends Chart {
         {
           volume: dataVolume,
           path: '/data',
-        },
-        {
-          volume: Volume.fromEmptyDir(this, 'run-volume', 'run'),
-          path: '/var/run',
         },
       ],
     })
