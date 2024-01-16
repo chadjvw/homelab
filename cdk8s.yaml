@@ -1,5 +1,5 @@
 language: typescript
-app: npx ts-node main.ts
+app: npx ts-node src/main.ts
 imports:
   - k8s
   - k8s@1.28.0

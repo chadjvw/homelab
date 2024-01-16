@@ -1,8 +1,11 @@
 *.d.ts
 *.js
+!.prettierrc.js
+!.eslintrc.js
 !jest.config.js
 node_modules
 dist/
+ts-dist/
 
 # Logs
 logs

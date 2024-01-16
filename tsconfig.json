@@ -5,11 +5,9 @@
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "lib": [
-      "es2016"
-    ],
+    "lib": ["ESNext"],
     "module": "CommonJS",
-    "noEmit": false,
+    "noEmit": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -24,10 +22,6 @@
     "stripInternal": true,
     "target": "ES2017"
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

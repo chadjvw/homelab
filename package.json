@@ -8,9 +8,11 @@
   "scripts": {
     "import": "cdk8s import",
     "synth": "cdk8s synth",
-    "compile": "tsc --build",
-    "watch": "tsc --build -w",
+    "compile": "tsc",
+    "watch": "tsc -w",
     "build": "npm run compile && npm run synth",
+    "format": "prettier --write '**/*.{js,ts,json,md}'",
+    "lint": "eslint src --ext .ts,.js,.json --cache",
     "upgrade": "ncu --format group --enginesNode --peer --upgrade"
   },
   "dependencies": {
@@ -20,8 +22,14 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
     "cdk8s-cli": "^2.198.30",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "npm-check-updates": "^16.14.12",
+    "prettier": "^3.2.2",
     "ts-node": "^10",
     "typescript": "^5.3.3"
   }
