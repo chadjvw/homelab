@@ -4,36 +4,5 @@
 
 1. Install [k3s](https://k3s.io/)
 2. Setup [ArgoCD](https://argoproj.github.io/cd/)
-3. Add [`cdk8s`](https://cdk8s.io/) sidecar
-   - `kubectl patch deployment argocd-repo-server -n argocd --patch-file argo.yaml`
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-name: argocd-repo-server
-namespace: argocd
-spec:
-template:
-      spec:
-      containers:
-         - name: cdk8s-plugin
-            image: ghcr.io/wyvernzora/argocd-cdk8s-plugin
-            command:
-            - /var/run/argocd/argocd-cmp-server
-            volumeMounts:
-            - name: var-files
-               mountPath: /var/run/argocd
-            - name: plugins
-               mountPath: /home/argocd/cmp-server/plugins
-            - name: cdk8s-working-dir
-               mountPath: /tmp
-            securityContext:
-               runAsNonRoot: true
-               runAsUser: 999
-      volumes:
-         - name: cdk8s-working-dir
-            emptyDir: { }
-```
-
-1. Add this repo as an application
+3. Add this repo as an application pointing to the `manifests` directory
+   - Argo is configured to use the generated manifests directory instead of a cdk8s plugin because the cdk8s plugin doesn't output valid k8s yaml with its `--stdout` flag during synth. To fix this, a `husky` pre-commit hook re-synths and adds the generated manifests on each commit. 
