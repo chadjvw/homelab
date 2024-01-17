@@ -25,6 +25,7 @@ export class MetalLbChart extends Chart {
       spec: {
         repo: 'https://metallb.github.io/metallb',
         chart: 'metallb',
+        version: '~0.13.12',
         targetNamespace: 'metallb-system',
       },
     })

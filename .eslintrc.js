@@ -3,14 +3,15 @@ module.exports = {
     es6: true,
     node: true,
   },
+  ignorePatterns: ['imports/*'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
   rules: {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [

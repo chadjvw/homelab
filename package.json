@@ -7,18 +7,20 @@
   "private": true,
   "scripts": {
     "import": "cdk8s import",
-    "synth": "cdk8s synth",
+    "synth": "cdk8s synth --output manifests",
     "compile": "tsc",
     "watch": "tsc -w",
     "build": "npm run compile && npm run synth",
     "format": "prettier --write '**/*.{js,ts,json,md}'",
     "lint": "eslint src --ext .ts,.js,.json --cache",
-    "upgrade": "ncu --format group --enginesNode --peer --upgrade"
+    "upgrade": "ncu --format group --enginesNode --peer --upgrade",
+    "prepare": "husky install"
   },
   "dependencies": {
     "cdk8s": "^2.68.26",
     "cdk8s-plus-27": "^2.7.72",
     "constructs": "^10.3.0",
+    "husky": "^8.0.3",
     "patch-package": "^8.0.0",
     "yaml": "^2.3.4"
   },
