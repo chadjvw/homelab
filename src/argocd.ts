@@ -6,13 +6,26 @@ export class ArgoCDChart extends Chart {
   constructor(scope: Construct, id: string) {
     super(scope, id)
 
-    new Application(this, 'name', {
+    new Application(this, 'the-lab', {
       metadata: {
-        name: '',
+        name: 'the-lab',
+        namespace: 'argocd',
       },
       spec: {
         project: 'default',
-        destination: {},
+        source: {
+          repoUrl: 'https://github.com/chadjvw/homelab.git',
+          path: 'manifests',
+          targetRevision: 'HEAD',
+        },
+        destination: {
+          server: 'https://kubernetes.default.svc',
+          namespace: 'homelab',
+        },
+        syncPolicy: {
+          automated: {},
+          syncOptions: ['CreateNamespace=true'],
+        },
       },
     })
   }

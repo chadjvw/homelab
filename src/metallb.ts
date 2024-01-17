@@ -2,6 +2,7 @@ import { Construct } from 'constructs'
 import { Chart } from 'cdk8s'
 import { Namespace } from 'cdk8s-plus-27'
 import { HelmChart } from '../imports/helm.cattle.io'
+import { BgpPeerV1Beta2, IpAddressPool } from '../imports/metallb.io'
 
 export class MetalLbChart extends Chart {
   constructor(scope: Construct, id: string) {
@@ -18,7 +19,7 @@ export class MetalLbChart extends Chart {
       },
     })
 
-    const metallb = new HelmChart(this, 'helm-chart', {
+    new HelmChart(this, 'helm-chart', {
       metadata: {
         namespace: 'kube-system',
       },
@@ -30,6 +31,25 @@ export class MetalLbChart extends Chart {
       },
     })
 
-    metallb.node.addDependency(namespace)
+    new IpAddressPool(this, 'ip-pool', {
+      metadata: {
+        namespace: namespace.name,
+      },
+      spec: {
+        addresses: ['10.0.2.0-10.0.2.50'],
+        avoidBuggyIPs: true,
+      },
+    })
+
+    new BgpPeerV1Beta2(this, 'bgp-peer', {
+      metadata: {
+        namespace: namespace.name,
+      },
+      spec: {
+        myAsn: 64500,
+        peerAsn: 64501,
+        peerAddress: '10.0.0.1',
+      },
+    })
   }
 }

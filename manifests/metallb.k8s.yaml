@@ -18,3 +18,23 @@ spec:
   repo: https://metallb.github.io/metallb
   targetNamespace: metallb-system
   version: ~0.13.12
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: metallb-ip-pool-c8e59864
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.0.2.0-10.0.2.50
+  avoidBuggyIPs: true
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: metallb-bgp-peer-c8b4bed3
+  namespace: metallb-system
+spec:
+  myASN: 64500
+  peerASN: 64501
+  peerAddress: 10.0.0.1

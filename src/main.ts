@@ -5,7 +5,7 @@ import { ArgoCDChart } from './argocd'
 
 const app = new App()
 
-new ArgoCDChart(app, 'argocd-app')
+new ArgoCDChart(app, 'argocd')
 new MetalLbChart(app, 'metallb')
 new SmokePingChart(app, 'smoke-ping')
 
