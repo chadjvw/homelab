@@ -6,6 +6,8 @@
 node_modules
 dist/
 ts-dist/
+crds.json
+compose.yaml
 
 # Logs
 logs

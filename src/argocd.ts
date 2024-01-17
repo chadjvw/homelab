@@ -28,5 +28,31 @@ export class ArgoCDChart extends Chart {
         },
       },
     })
+
+    new Application(this, 'metallb', {
+      metadata: {
+        name: 'metallb',
+        namespace: 'argocd',
+      },
+      spec: {
+        project: 'default',
+        source: {
+          repoUrl: 'https://metallb.github.io/metallb',
+          chart: 'metallb',
+          targetRevision: '~0.13.12',
+          helm: {
+            releaseName: 'metallb',
+          },
+        },
+        destination: {
+          server: 'https://kubernetes.default.svc',
+          namespace: 'metallb-system',
+        },
+        syncPolicy: {
+          automated: {},
+          syncOptions: ['CreateNamespace=true'],
+        },
+      },
+    })
   }
 }

@@ -8,9 +8,9 @@ const app = new App()
 
 new ArgoCDChart(app, 'argocd')
 
-const helms = new HelmCharts(app, 'k3s-helm-charts')
+// const helms = new HelmCharts(app, 'k3s-helm-charts')
 const metalConfig = new MetalLbChart(app, 'metallb-config')
-metalConfig.addDependency(helms)
+// metalConfig.addDependency(helms)
 
 new SmokePingChart(app, 'smoke-ping')
 
