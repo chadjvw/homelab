@@ -1,0 +1,19 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: metallb-config-ip-pool-c810a05c
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.0.2.0-10.0.2.50
+  avoidBuggyIPs: true
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: metallb-config-bgp-peer-c831b89d
+  namespace: metallb-system
+spec:
+  myASN: 64500
+  peerASN: 64501
+  peerAddress: 10.0.0.1
