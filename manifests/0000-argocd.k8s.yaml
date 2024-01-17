@@ -1,8 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
   name: the-lab
   namespace: argocd
 spec:
@@ -14,29 +12,6 @@ spec:
     path: manifests
     repoURL: https://github.com/chadjvw/homelab.git
     targetRevision: HEAD
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-  name: metallb
-  namespace: argocd
-spec:
-  destination:
-    namespace: metallb-system
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    chart: metallb
-    helm:
-      releaseName: metallb
-    repoURL: https://metallb.github.io/metallb
-    targetRevision: ~0.13.12
   syncPolicy:
     automated: {}
     syncOptions:
