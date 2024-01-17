@@ -10,6 +10,7 @@ export class ArgoCDChart extends Chart {
       metadata: {
         name: 'the-lab',
         namespace: 'argocd',
+        annotations: { 'argocd.argoproj.io/sync-wave': '-1' },
       },
       spec: {
         project: 'default',
@@ -33,6 +34,7 @@ export class ArgoCDChart extends Chart {
       metadata: {
         name: 'metallb',
         namespace: 'argocd',
+        annotations: { 'argocd.argoproj.io/sync-wave': '-1' },
       },
       spec: {
         project: 'default',
