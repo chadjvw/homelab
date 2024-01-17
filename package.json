@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
+    "postinstall": "patch-package",
     "import": "cdk8s import",
     "synth": "cdk8s synth",
     "compile": "tsc",
@@ -19,6 +20,7 @@
     "cdk8s": "^2.68.26",
     "cdk8s-plus-27": "^2.7.72",
     "constructs": "^10.3.0",
+    "patch-package": "^8.0.0",
     "yaml": "^2.3.4"
   },
   "devDependencies": {
