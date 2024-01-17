@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run synth
