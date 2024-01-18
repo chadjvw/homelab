@@ -16,12 +16,18 @@ export class MetalLbChart extends Chart {
           'pod-security.kubernetes.io/warn': 'privileged',
         },
         name: 'metallb-system',
+        annotations: {
+          'argocd.argoproj.io/hook': 'PreSync',
+        },
       },
     })
 
     new HelmChart(this, 'helm-chart', {
       metadata: {
         namespace: 'kube-system',
+        annotations: {
+          'argocd.argoproj.io/hook': 'PreSync',
+        },
       },
       spec: {
         repo: 'https://metallb.github.io/metallb',
