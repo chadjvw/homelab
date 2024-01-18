@@ -16,18 +16,12 @@ export class MetalLbChart extends Chart {
           'pod-security.kubernetes.io/warn': 'privileged',
         },
         name: 'metallb-system',
-        annotations: {
-          'argocd.argoproj.io/hook': 'PreSync',
-        },
       },
     })
 
     new HelmChart(this, 'helm-chart', {
       metadata: {
         namespace: 'kube-system',
-        annotations: {
-          'argocd.argoproj.io/hook': 'PreSync',
-        },
       },
       spec: {
         repo: 'https://metallb.github.io/metallb',
@@ -41,7 +35,6 @@ export class MetalLbChart extends Chart {
       metadata: {
         namespace: namespace.name,
         annotations: {
-          'argocd.argoproj.io/sync-wave': '1',
           'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
         },
       },
@@ -55,7 +48,6 @@ export class MetalLbChart extends Chart {
       metadata: {
         namespace: namespace.name,
         annotations: {
-          'argocd.argoproj.io/sync-wave': '1',
           'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
         },
       },
