@@ -27,6 +27,7 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "1"
   name: metallb-config-ip-pool-c810a05c
   namespace: metallb-system
@@ -39,6 +40,7 @@ apiVersion: metallb.io/v1beta2
 kind: BGPPeer
 metadata:
   annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "1"
   name: metallb-config-bgp-peer-c831b89d
   namespace: metallb-system

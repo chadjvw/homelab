@@ -40,7 +40,10 @@ export class MetalLbChart extends Chart {
     new IpAddressPool(this, 'ip-pool', {
       metadata: {
         namespace: namespace.name,
-        annotations: { 'argocd.argoproj.io/sync-wave': '1' },
+        annotations: {
+          'argocd.argoproj.io/sync-wave': '1',
+          'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+        },
       },
       spec: {
         addresses: ['10.0.2.0-10.0.2.50'],
@@ -51,7 +54,10 @@ export class MetalLbChart extends Chart {
     new BgpPeerV1Beta2(this, 'bgp-peer', {
       metadata: {
         namespace: namespace.name,
-        annotations: { 'argocd.argoproj.io/sync-wave': '1' },
+        annotations: {
+          'argocd.argoproj.io/sync-wave': '1',
+          'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+        },
       },
       spec: {
         myAsn: 64500,
