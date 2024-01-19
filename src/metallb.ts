@@ -29,7 +29,7 @@ export class MetalLbChart extends Chart {
       spec: {
         myAsn: 64500,
         peerAsn: 64501,
-        peerAddress: '10.0.0.1',
+        peerAddress: '10.0.1.1',
       },
     })
   }
