@@ -1,5 +1,5 @@
 import { Construct } from 'constructs'
-import { Chart } from 'cdk8s'
+import { App, Chart } from 'cdk8s'
 import { Application } from '../imports/argoproj.io'
 
 export class ArgoCDChart extends Chart {
@@ -21,6 +21,52 @@ export class ArgoCDChart extends Chart {
         destination: {
           server: 'https://kubernetes.default.svc',
           namespace: 'homelab',
+        },
+        syncPolicy: {
+          automated: {},
+          syncOptions: ['CreateNamespace=true'],
+        },
+      },
+    })
+
+    new Application(this, 'metallb', {
+      metadata: {
+        name: 'metallb',
+        namespace: 'argocd',
+      },
+      spec: {
+        project: 'default',
+        source: {
+          repoUrl: 'https://metallb.github.io/metallb',
+          chart: 'metallb',
+          targetRevision: '~0.13.12',
+        },
+        destination: {
+          server: 'https://kubernetes.default.svc',
+          namespace: 'metallb-system',
+        },
+        syncPolicy: {
+          automated: {},
+          syncOptions: ['CreateNamespace=true'],
+        },
+      },
+    })
+
+    new Application(this, 'external-dns', {
+      metadata: {
+        name: 'external-dns',
+        namespace: 'argocd',
+      },
+      spec: {
+        project: 'default',
+        source: {
+          repoUrl: 'https://kubernetes-sigs.github.io/external-dns/',
+          chart: 'external-dns',
+          targetRevision: '~1.14.0',
+        },
+        destination: {
+          server: 'https://kubernetes.default.svc',
+          namespace: 'external-dns',
         },
         syncPolicy: {
           automated: {},
