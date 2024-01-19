@@ -1,6 +1,6 @@
 import { Construct } from 'constructs'
 import { Chart } from 'cdk8s'
-import { Deployment, EnvValue, HostPathVolumeType, Volume } from 'cdk8s-plus-27'
+import { Deployment, EnvValue, HostPathVolumeType, ServiceType, Volume } from 'cdk8s-plus-27'
 
 export class SmokePingChart extends Chart {
   constructor(scope: Construct, appLabel: string) {
@@ -49,6 +49,7 @@ export class SmokePingChart extends Chart {
 
     deployment.exposeViaService({
       name: 'smoke-ping',
+      serviceType: ServiceType.LOAD_BALANCER,
     })
   }
 }
