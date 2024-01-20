@@ -30,6 +30,7 @@ export class MetalLbChart extends Chart {
         myAsn: 64500,
         peerAsn: 64501,
         peerAddress: '10.0.1.1',
+        sourceAddress: '10.0.1.10',
       },
     })
   }
