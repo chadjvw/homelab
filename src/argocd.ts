@@ -15,7 +15,7 @@ export class ArgoCDChart extends Chart {
         project: 'default',
         source: {
           repoUrl: 'https://argoproj.github.io/argo-helm',
-          chart: 'argo/argo-cd',
+          chart: 'argo-cd',
           targetRevision: '~5.53.3',
           helm: {
             valuesObject: {
