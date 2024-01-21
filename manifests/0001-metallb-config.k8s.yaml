@@ -3,7 +3,7 @@ kind: IPAddressPool
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: metallb-config-ip-pool-c810a05c
+  name: local-ip-pool
   namespace: metallb-system
 spec:
   addresses:
@@ -15,10 +15,21 @@ kind: BGPPeer
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: metallb-config-bgp-peer-c831b89d
+  name: unifi-usg-bgp-peer
   namespace: metallb-system
 spec:
   myASN: 64500
   peerASN: 64501
   peerAddress: 10.0.1.1
   sourceAddress: 10.0.1.10
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: local-bgp
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - local-ip-pool
