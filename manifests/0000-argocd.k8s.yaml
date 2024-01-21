@@ -1,6 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: argocd-helm
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: argo/argo-cd
+    helm:
+      valuesObject:
+        server:
+          service:
+            type: LoadBalancer
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: ~5.53.3
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: the-lab
   namespace: argocd
 spec:

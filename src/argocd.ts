@@ -6,6 +6,38 @@ export class ArgoCDChart extends Chart {
   constructor(scope: Construct, id: string) {
     super(scope, id)
 
+    new Application(this, 'argocd', {
+      metadata: {
+        name: 'argocd-helm',
+        namespace: 'argocd',
+      },
+      spec: {
+        project: 'default',
+        source: {
+          repoUrl: 'https://argoproj.github.io/argo-helm',
+          chart: 'argo/argo-cd',
+          targetRevision: '~5.53.3',
+          helm: {
+            valuesObject: {
+              server: {
+                service: {
+                  type: 'LoadBalancer',
+                },
+              },
+            },
+          },
+        },
+        destination: {
+          server: 'https://kubernetes.default.svc',
+          namespace: 'argocd',
+        },
+        syncPolicy: {
+          automated: {},
+          syncOptions: ['CreateNamespace=true'],
+        },
+      },
+    })
+
     new Application(this, 'the-lab', {
       metadata: {
         name: 'the-lab',
