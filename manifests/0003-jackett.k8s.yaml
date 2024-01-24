@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jackett-app-container-c88b7899
+spec:
+  minReadySeconds: 0
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      cdk8s.io/metadata.addr: jackett-app-container-c8c235f1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        cdk8s.io/metadata.addr: jackett-app-container-c8c235f1
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - env:
+            - name: PUID
+              value: "583"
+            - name: PGID
+              value: "583"
+            - name: TZ
+              value: America/Denver
+          image: ghcr.io/linuxserver/jackett
+          imagePullPolicy: Always
+          name: main
+          ports:
+            - containerPort: 9117
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 2048Mi
+            requests:
+              cpu: 1000m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          startupProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 9117
+          volumeMounts:
+            - mountPath: /config
+              name: config
+      dnsPolicy: ClusterFirst
+      hostNetwork: false
+      restartPolicy: Always
+      securityContext:
+        fsGroupChangePolicy: Always
+        runAsNonRoot: true
+      setHostnameAsFQDN: false
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - hostPath:
+            path: /opt/jackett
+            type: Directory
+          name: config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jackett
+spec:
+  externalIPs: []
+  ports:
+    - port: 9117
+      targetPort: 9117
+  selector:
+    cdk8s.io/metadata.addr: jackett-app-container-c8c235f1
+  type: LoadBalancer
