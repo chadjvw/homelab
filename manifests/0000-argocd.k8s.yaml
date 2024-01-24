@@ -12,6 +12,73 @@ spec:
     chart: argo-cd
     helm:
       valuesObject:
+        cmp:
+          create: true
+          plugins:
+            avp:
+              allowConcurrency: true
+              discover:
+                find:
+                  command:
+                    - sh
+                    - -c
+                    - find . -name '*.yaml' | xargs -I {} grep "path" {} | grep .
+              generate:
+                command:
+                  - argocd-vault-plugin
+                  - generate
+                  - --verbose-sensitive-output
+                  - "."
+              lockRepo: false
+        repoServer:
+          env:
+            - name: AVP_TYPE
+              value: awssecretsmanager
+            - name: AWS_REGION
+              value: us-west-2
+          extraContainers:
+            - command:
+                - /var/run/argocd/argocd-cmp-server
+              image: quay.io/argoproj/argocd:v2.9.4
+              name: avp
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 999
+              volumeMounts:
+                - mountPath: /var/run/argocd
+                  name: var-files
+                - mountPath: /home/argocd/cmp-server/plugins
+                  name: plugins
+                - mountPath: /tmp
+                  name: tmp
+                - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+                  name: argocd-cmp-cm
+                  subPath: avp.yaml
+                - mountPath: /usr/local/bin/argocd-vault-plugin
+                  name: custom-tools
+                  subPath: argocd-vault-plugin
+          initContainers:
+            - args:
+                - wget -O argocd-vault-plugin https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v\${AVP_VERSION}/argocd-vault-plugin_\${AVP_VERSION}_linux_\${AVP_ARCHITECTURE} && chmod +x argocd-vault-plugin && mv argocd-vault-plugin /custom-tools/
+              command:
+                - sh
+                - -c
+              env:
+                - name: AVP_VERSION
+                  value: 1.17.0
+                - name: AVP_ARCHITECTURE
+                  value: arm64
+              image: alpine:latest
+              name: download-tools
+              volumeMounts:
+                - mountPath: /custom-tools
+                  name: custom-tools
+          volumes:
+            - configMap:
+                name: argocd-cmp-cm
+              name: argocd-cmp-cm
+            - emptyDir: {}
+              name: custom-tools
         server:
           service:
             type: LoadBalancer
